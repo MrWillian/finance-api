@@ -10,3 +10,4 @@ Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
 Route::apiResource('accounts', 'AccountController');
+Route::apiResource('expenses', 'ExpenseController');
