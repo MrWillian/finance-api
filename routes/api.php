@@ -12,3 +12,4 @@ Route::post('login', 'AuthController@login');
 Route::apiResource('accounts', 'AccountController');
 Route::apiResource('expenses', 'ExpenseController');
 Route::apiResource('billstopay', 'BillToPayController');
+Route::apiResource('billstoreceive', 'BillToReceiveController');
