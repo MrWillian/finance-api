@@ -9,4 +9,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
-// Route::apiResource('books', 'BookController');
+Route::apiResource('accounts', 'AccountController');
+Route::apiResource('expenses', 'ExpenseController');
+Route::apiResource('billstopay', 'BillToPayController');
+Route::apiResource('billstoreceive', 'BillToReceiveController');
