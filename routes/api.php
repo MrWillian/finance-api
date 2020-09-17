@@ -9,4 +9,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 
-// Route::apiResource('books', 'BookController');
+Route::post('sendSMS', 'SMSController@sendSMS');
