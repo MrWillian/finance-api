@@ -3,41 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Services\TokenService;
+use App\Http\Repositories\UserRepository;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-      $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'tellphone' => $request->tellphone,
-      ]);
+  protected $users;
 
-      $token = auth()->login($user);
+  public function __construct(UserRepository $users)
+  {
+    $this->users = $users;
+  }
 
-      return $this->respondWithToken($token);
-    }
+  public function register(Request $request)
+  {
+    $user = $this->users->create($request);
+    return TokenService::respondWithToken($user);
+  }
 
-    public function login(Request $request)
-    {
-      $credentials = $request->only(['email']);
-      $user = User::where('email', $credentials)->first();
+  public function login(Request $request)
+  {
+    $user = $this->checkCredentialsAndReturnUser($request);
+    return TokenService::respondWithToken($user);
+  }
 
-      if (!$user) 
-        return response()->json(['error' => 'Unauthorized'], 401);
+  private function checkCredentialsAndReturnUser(Request $request) {
+    $user = $this->users->searchUserByEmail($request->only(['email']));
 
-      $token = auth()->login($user);
-      return $this->respondWithToken($token);
-    }
+    if (!$user) 
+      return response()->json(['error' => 'User not found'], 404);
 
-    protected function respondWithToken($token)
-    {
-      return response()->json([
-        'access_token' => $token,
-        'token_type' => 'bearer',
-        'expires_in' => auth()->factory()->getTTL() * 60
-      ]);
-    }
+    return $user;
+  }
 }
