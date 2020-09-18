@@ -88,7 +88,7 @@ abstract class BaseRepository
     }
     return $this->newQuery()->find($id);
   }
-
+  
   /**
    * Return first item of Collection (LengthAwarePaginator - items)
    */
