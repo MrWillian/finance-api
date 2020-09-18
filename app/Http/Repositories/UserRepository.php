@@ -3,15 +3,22 @@
 namespace App\Http\Repositories;
 
 use App\User;
-use Illuminate\Http\Request;
 use App\Http\Repositories\Types\BaseRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository {
   protected $modelClass = User::class;
 
   public function create(Request $request) {
     try {
-      return User::create($this->validateData($request));
+      $user = $this->validateData($request);
+      return User::create([
+        'name' => $user['name'],
+        'email' => $user['email'],
+        'phone_number' => $user['phone_number'],
+        'password' => Hash::make($user['password']),
+      ]);
     } catch(Exception $exception) {
       throw new Exception();
     }
@@ -23,32 +30,30 @@ class UserRepository extends BaseRepository {
     return $this->doQuery($query)->first();
   }
 
-  public function updateAccount(Request $request, $account_id) {
+  public function update(Request $request, $user_id) {
     try {
-      $account = $this->findAccountByID($account_id);
-      $this->checkCurrentlyUserIsAccountOwner($request, $account);
-      $validatedData = $this->validateAccountData($request);
-      $account->update($validatedData);
-      return new AccountResource($account);
+      $user = $this->findByID($user_id);
+      $validatedData = $this->validateData($request);
+      $user->update($validatedData);
+      return $user;
     } catch(Exception $exception) {
       throw new Exception();
     }
   }
 
-  public function showAccount($account_id) {
+  public function show($user_id) {
     try {
-      $account = $this->findAccountByID($account_id);
-      return new AccountResource($account);
+      return $this->findByID($user_id);;
     } catch(Exception $exception) {
       throw new Exception();
     }
   }
 
-  public function destroyAccount($account_id) {
+  public function destroy($user_id) {
     try {
-      $account = $this->findAccountByID($account_id);
-      $account->delete();
-      return response()->json('resource deleted successfully', 204);
+      $user = $this->findByID($user_id);
+      $user->delete();
+      return response()->json('user deleted successfully', 204);
     } catch(Exception $exception) {
       throw new Exception();
     }
@@ -58,7 +63,8 @@ class UserRepository extends BaseRepository {
     return $request->validate([
       'name' => 'required|max:140',
       'email' => 'required|email',
-      'phone_number' => 'required'
+      'phone_number' => 'required',
+      'password' => 'required|string|min:8',
     ]);
   }
 }
