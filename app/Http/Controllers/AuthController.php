@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Auth;
 use App\Services\TokenService;
 use App\Http\Repositories\UserRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -19,21 +20,25 @@ class AuthController extends Controller
   public function register(Request $request)
   {
     $user = $this->users->create($request);
-    return TokenService::respondWithToken($user);
+    return TokenService::makeLoginAndReturnToken($user);
   }
 
   public function login(Request $request)
   {
     $user = $this->checkCredentialsAndReturnUser($request);
-    return TokenService::respondWithToken($user);
+    return TokenService::makeLoginAndReturnToken($user);
+  }
+
+  public function logout(Request $request) {
+    Auth::logout();
+    return response()->json(['success' => 'User disconnected'], 200);
   }
 
   private function checkCredentialsAndReturnUser(Request $request) {
-    $user = $this->users->searchUserByEmail($request->only(['email']));
-
-    if (!$user) 
+    if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true)) {
+      return $this->users->searchUserByEmail($request->email);
+    } else {
       return response()->json(['error' => 'User not found'], 404);
-
-    return $user;
+    }
   }
 }
