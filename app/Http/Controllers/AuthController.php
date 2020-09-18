@@ -30,7 +30,7 @@ class AuthController extends Controller
     if (!$result)
       return response()->json(['error' => 'User not found'], 404);
   
-    return TokenService::makeLoginAndReturnToken($user);
+    return TokenService::makeLoginAndReturnToken($result);
   }
 
   public function logout(Request $request) {
