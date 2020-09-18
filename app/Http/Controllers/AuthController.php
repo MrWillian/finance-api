@@ -25,7 +25,11 @@ class AuthController extends Controller
 
   public function login(Request $request)
   {
-    $user = $this->checkCredentialsAndReturnUser($request);
+    $result = $this->checkCredentialsAndReturnUser($request);
+    
+    if (!$result)
+      return response()->json(['error' => 'User not found'], 404);
+  
     return TokenService::makeLoginAndReturnToken($user);
   }
 
@@ -35,10 +39,9 @@ class AuthController extends Controller
   }
 
   private function checkCredentialsAndReturnUser(Request $request) {
-    if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true)) {
+    if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true))
       return $this->users->searchUserByEmail($request->email);
-    } else {
-      return response()->json(['error' => 'User not found'], 404);
-    }
+
+    return null;
   }
 }
