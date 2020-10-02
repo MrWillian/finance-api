@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Services\TokenService;
 use App\Http\Repositories\UserRepository;
+use App\Exceptions\InvalidCredentialsException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -25,11 +26,7 @@ class AuthController extends Controller
 
   public function login(Request $request)
   {
-    $result = $this->checkCredentialsAndReturnUser($request);
-    
-    if (!$result)
-      return response()->json(['error' => 'User not found'], 404);
-  
+    $result = $this->checkCredentialsAndReturnUser($request);   
     return TokenService::makeLoginAndReturnToken($result);
   }
 
@@ -42,6 +39,6 @@ class AuthController extends Controller
     if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true))
       return $this->users->searchUserByEmail($request->email);
 
-    return null;
+    throw new InvalidCredentialsException();
   }
 }
