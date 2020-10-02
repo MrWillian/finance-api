@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Repositories\AccountRepository;
+use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
@@ -89,5 +89,9 @@ class AccountController extends Controller
     public function destroy($account_id)
     {
         return $this->accounts->destroyAccount($account_id);
+    }
+
+    public function getAccountsForUser(Request $request) {
+        return $this->accounts->getAccountsForUser($request);
     }
 }
