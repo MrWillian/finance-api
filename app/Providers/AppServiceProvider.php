@@ -5,9 +5,12 @@ namespace App\Providers;
 use Aws\Sns\SnsClient;
 use Aws\Credentials\Credentials;
 use App\Channels\SmsChannel;
+use App\Services\TokenService;
 use App\User;
 use App\Observers\UserObserver;
-use App\Services\TokenService;
+use App\Account;
+use App\Observers\AccountObserver;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Notifications\ChannelManager;
 use Illuminate\Support\Facades\Notification;
@@ -49,5 +52,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
+        Account::observe(AccountObserver::class);
     }
 }
