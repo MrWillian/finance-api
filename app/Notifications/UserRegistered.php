@@ -42,13 +42,17 @@ class UserRegistered extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        try {
+            return (new MailMessage)
                 ->subject('Seja bem-vindo ao Finances Control!!')
                 ->from('williansoares.dev@gmail.com', 'Finances Control')
                 ->greeting('Hello ' . $this->name . '!')
                 ->line('The introduction to the notification.')
                 ->action('Notification Action', url('/'))
                 ->line('Thank you for using our application!');
+        } catch (\Exception $ex) {
+            console.log($ex);
+        }
 
                 // ->view('emails.registered', ['name' => $this->name] );
     }
