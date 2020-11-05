@@ -19,7 +19,7 @@ class AccountRepository extends ApiRepository {
   public function getAccountsForUser($request) {
     try {
       $query = $this->newQuery();
-      $query->where('user_id', $request->user()->id);
+      $query->where('user_id', $request->user()->id)->orderBy('id');
       return $this->successResponse($this->doQuery($query), 200);
     } catch(Exception $exception) {
       return $this->errorResponse($exception, 500);
