@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Expense;
+use App\TransactionCategory;
 use Faker\Generator as Faker;
 
-$factory->define(Expense::class, function (Faker $faker) {
+$factory->define(TransactionCategory::class, function (Faker $faker) {
     return [
         //
     ];

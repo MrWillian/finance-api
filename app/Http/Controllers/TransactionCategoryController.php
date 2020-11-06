@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\TransactionCategory;
 use Illuminate\Http\Request;
-use App\Http\Repositories\BillToReceiveRepository;
 
-class BillToReceiveController extends Controller
+class TransactionCategoryController extends Controller
 {
-    protected $billsToReceive;
-
-    public function __construct(BillToReceiveRepository $billsToReceive) 
-    {
-        $this->billsToReceive = $billsToReceive;
-        $this->middleware('auth:api')->except(['index', 'show']);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +14,7 @@ class BillToReceiveController extends Controller
      */
     public function index()
     {
-        return $this->billsToReceive->index();
+        //
     }
 
     /**
@@ -43,27 +35,27 @@ class BillToReceiveController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->billsToReceive->create($request);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $billToReceiveID
+     * @param  \App\TransactionCategory  $transactionCategory
      * @return \Illuminate\Http\Response
      */
-    public function show($billToReceiveID)
+    public function show(TransactionCategory $transactionCategory)
     {
-        return $this->billsToReceive->show($billToReceiveID);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BillToReceive  $billToReceive
+     * @param  \App\TransactionCategory  $transactionCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit(BillToReceive $billToReceive)
+    public function edit(TransactionCategory $transactionCategory)
     {
         //
     }
@@ -72,22 +64,22 @@ class BillToReceiveController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $$billToReceiveID
+     * @param  \App\TransactionCategory  $transactionCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $billToReceiveID)
+    public function update(Request $request, TransactionCategory $transactionCategory)
     {
-        return $this->billsToReceive->update($request, $billToReceiveID);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $billToReceiveID
+     * @param  \App\TransactionCategory  $transactionCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy($billToReceiveID)
+    public function destroy(TransactionCategory $transactionCategory)
     {
-        return $this->billsToReceive->destroy($billToReceiveID);
+        //
     }
 }

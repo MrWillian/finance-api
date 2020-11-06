@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Transaction;
 use Illuminate\Http\Request;
-use App\Http\Repositories\BillToPayRepository;
+use App\Http\Repositories\TransactionRepository;
 
-class BillToPayController extends Controller
+class TransactionController extends Controller
 {
-    protected $billsToPay;
+    protected $transactions;
 
-    public function __construct(BillToPayRepository $billsToPay) 
+    public function __construct(TransactionRepository $transactions)
     {
-        $this->billsToPay = $billsToPay;
+        $this->transactions = $transactions;
         $this->middleware('auth:api')->except(['index', 'show']);
     }
 
@@ -22,7 +23,7 @@ class BillToPayController extends Controller
      */
     public function index()
     {
-        return $this->billsToPay->index();
+        return $this->transactions->index();
     }
 
     /**
@@ -43,27 +44,27 @@ class BillToPayController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->billsToPay->create($request);
+        return $this->transactions->create($request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $billToPayID
+     * @param  \int $transaction_id
      * @return \Illuminate\Http\Response
      */
-    public function show($billToPayID)
+    public function show($transaction_id)
     {
-        return $this->billsToPay->show($billToPayID);
+        return $this->transactions->show($transaction_id);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BillToPay  $billToPay
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(BillToPay $billToPay)
+    public function edit(Transaction $transaction)
     {
         //
     }
@@ -72,22 +73,22 @@ class BillToPayController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $billToPayID
+     * @param  \App\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $billToPayID)
+    public function update(Request $request, $transaction_id)
     {
-        return $this->billsToPay->update($request, $billToPayID);
+        return $this->transactions->update($request, $transaction_id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $billToPayID
+     * @param  \int $transaction_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($billToPayID)
+    public function destroy($transaction_id)
     {
-        return $this->billsToPay->destroy($billToPayID);
+        return $this->transactions->destroy($transaction_id);
     }
 }

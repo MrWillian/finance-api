@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillToPaysTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateBillToPaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('bills_to_pay', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('account_id');
-            $table->string('name');
+            $table->unsignedBigInteger('category_id');
             $table->string('description');
+            $table->enum('type', ['expense', 'profit']);
             $table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->decimal('value')->default(0);
 
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('transaction_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateBillToPaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bill_to_pays');
+        Schema::dropIfExists('transactions');
     }
 }
