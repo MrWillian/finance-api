@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Repositories;
+
+use App\Transaction;
+use App\Http\Resources\TransactionResource;
+use Illuminate\Http\Request;
+use App\Http\Repositories\ApiRepository;
+
+class TransactionRepository extends ApiRepository {
+  protected $modelClass = Transaction::class;
+
+  public function index() {
+    return $this->successResponse(new TransactionResource(Transaction::all()));
+  }
+
+  public function create(Request $request) {
+    try {
+      $validatedData = $this->validateTransactionData($request);
+      $transaction = Transaction::create($validatedData);
+
+      return $this->successResponse(new TransactionResource($transaction),'Transaction Created', 201);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
+  public function update(Request $request, $transaction_id) {
+    try {
+      $transaction = $this->findTransactionByID($transaction_id);
+      $validatedData = $request->only([ 'description', 'type', 'value', 'date' ]);
+      $transaction->update($validatedData);
+      return new TransactionResource($transaction);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
+  public function show($transaction_id) {
+    try {
+      $transaction = $this->findTransactionByID($transaction_id);
+      return new TransactionResource($transaction);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
+  public function destroy($transaction_id) {
+    try {
+      $transaction = $this->findTransactionByID($transaction_id);
+      $transaction->delete();
+      return response()->json('resource deleted successfully', 204);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
+  public function findTransactionByID($transaction_id) {
+    return $this->findByID($transaction_id);
+  }
+
+  public function validateTransactionData(Request $request) {
+    return $request->validate([
+      'type' => 'required|max:7',
+      'description' => 'required|max:255',
+      'account_id' => 'required',
+      'category_id' => 'required',
+      'date' => '',
+      'value' => 'required'
+    ]);
+  }
+}
