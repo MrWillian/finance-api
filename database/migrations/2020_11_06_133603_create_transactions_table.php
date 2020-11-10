@@ -15,6 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('category_id');
             $table->string('description');
@@ -22,6 +23,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->decimal('value')->default(0);
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('transaction_categories')->onDelete('cascade');
             $table->timestamps();
