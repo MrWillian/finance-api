@@ -8,3 +8,4 @@ Route::apiResource('accounts', 'AccountController');
 Route::apiResource('transactions', 'TransactionController');
 
 Route::get('search/accounts', 'AccountController@getAccountsForUser');
+Route::get('search/transactions', 'TransactionController@getTransactionsForUser');

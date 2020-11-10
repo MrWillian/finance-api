@@ -91,4 +91,8 @@ class TransactionController extends Controller
     {
         return $this->transactions->destroy($transaction_id);
     }
+
+    public function getTransactionsForUser(Request $request) {
+        return $this->transactions->getTransactionsForUser($request);
+    }
 }

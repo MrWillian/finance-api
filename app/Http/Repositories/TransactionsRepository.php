@@ -14,12 +14,22 @@ class TransactionRepository extends ApiRepository {
     return $this->successResponse(new TransactionResource(Transaction::all()));
   }
 
+  public function getTransactionsForUser($request) {
+    try {
+      $query = $this->newQuery();
+      $query->where('user_id', $request->user()->id)->orderBy('id');
+      return $this->successResponse($this->doQuery($query), 200);
+    } catch(Exception $exception) {
+      return $this->errorResponse($exception, 500);
+    }
+  }
+
   public function create(Request $request) {
     try {
       $validatedData = $this->validateTransactionData($request);
+      $validatedData['user_id'] = $request->user()->id;
       $transaction = Transaction::create($validatedData);
-
-      return $this->successResponse(new TransactionResource($transaction),'Transaction Created', 201);
+      return $this->successResponse(new TransactionResource($transaction), 'Transaction Created', 201);
     } catch(Exception $exception) {
       throw new Exception();
     }
