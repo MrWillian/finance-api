@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\TransactionCategory;
 use Illuminate\Http\Request;
+use App\Http\Repositories\TransactionCategoryRepository;
 
 class TransactionCategoryController extends Controller
 {
+    protected $transactionCategories;
+
+    public function __construct(TransactionCategoryRepository $transactionCategories)
+    {
+        $this->transactionCategories = $transactionCategories;
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class TransactionCategoryController extends Controller
      */
     public function index()
     {
-        //
+        return $this->transactionCategories->index();
     }
 
     /**
