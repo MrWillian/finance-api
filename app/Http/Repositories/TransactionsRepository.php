@@ -17,7 +17,7 @@ class TransactionRepository extends ApiRepository {
   public function getTransactionsForUser($request) {
     try {
       $query = $this->newQuery();
-      $query->where('user_id', $request->user()->id)->orderBy('id');
+      $query->where('user_id', $request->user()->id)->orderBy('id', 'desc');
       return $this->successResponse($this->doQuery($query), 200);
     } catch(Exception $exception) {
       return $this->errorResponse($exception, 500);
