@@ -10,3 +10,5 @@ Route::apiResource('categories', 'TransactionCategoryController');
 
 Route::get('search/accounts', 'AccountController@getAccountsForUser');
 Route::get('search/transactions', 'TransactionController@getTransactionsForUser');
+
+Route::get('balance', 'BalanceController@getBalanceForUser');
