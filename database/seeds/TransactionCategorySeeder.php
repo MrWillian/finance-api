@@ -11,10 +11,14 @@ class TransactionCategorySeeder extends Seeder
      */
     public function run()
     {
-        DB::table('transaction_categories')->insert(['name' => 'Acessórios']);
-        DB::table('transaction_categories')->insert(['name' => 'Entretenimento']);
-        DB::table('transaction_categories')->insert(['name' => 'Eventos']);
-        DB::table('transaction_categories')->insert(['name' => 'Comida']);
+        DB::table('transaction_categories')->insert(['name' => 'Lucro']);
+        DB::table('transaction_categories')->insert(['name' => 'Acessório']);
+        DB::table('transaction_categories')->insert(['name' => 'Automóvel']);
         DB::table('transaction_categories')->insert(['name' => 'Combustível']);
+        DB::table('transaction_categories')->insert(['name' => 'Comida']);
+        DB::table('transaction_categories')->insert(['name' => 'Eletrodoméstico']);
+        DB::table('transaction_categories')->insert(['name' => 'Entretenimento']);
+        DB::table('transaction_categories')->insert(['name' => 'Evento']);
+        DB::table('transaction_categories')->insert(['name' => 'Supermercado']);
     }
 }
