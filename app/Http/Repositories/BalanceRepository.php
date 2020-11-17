@@ -11,6 +11,7 @@ class BalanceRepository extends ApiRepository {
   public function getBalanceForUser($request) {
     try {
       $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->sum('amount');
+      $countAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->count();
       $totalProfit = DB::table('transactions')
         ->where('type', 'profit')
         ->where('user_id', $request->user()->id)
@@ -22,6 +23,7 @@ class BalanceRepository extends ApiRepository {
 
       $balance = new Balance();
       $balance->total = $totalAccounts;
+      $balance->count = $countAccounts;
       $balance->profits = $totalProfit;
       $balance->expenses = $totalExpenses;
      
