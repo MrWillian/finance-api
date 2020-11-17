@@ -12,3 +12,4 @@ Route::get('search/accounts', 'AccountController@getAccountsForUser');
 Route::get('search/transactions', 'TransactionController@getTransactionsForUser');
 
 Route::get('balance', 'BalanceController@getBalanceForUser');
+Route::get('total_for_category', 'BalanceController@getTotalForCategory');

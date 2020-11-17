@@ -18,4 +18,8 @@ class BalanceController extends Controller
     return $this->balance->getBalanceForUser($request);
   }
 
+  public function getTotalForCategory(Request $request) {
+    return $this->balance->getTotalForCategory($request);
+  }
+
 }
