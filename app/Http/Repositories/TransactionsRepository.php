@@ -5,10 +5,17 @@ namespace App\Http\Repositories;
 use App\Transaction;
 use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
+use App\Http\Repositories\AccountRepository;
 use App\Http\Repositories\ApiRepository;
 
 class TransactionRepository extends ApiRepository {
   protected $modelClass = Transaction::class;
+  protected $accounts;
+
+  public function __construct(AccountRepository $accounts)
+  {
+    $this->accounts = $accounts;
+  }
 
   public function index() {
     return $this->successResponse(new TransactionResource(Transaction::all()));
@@ -29,6 +36,7 @@ class TransactionRepository extends ApiRepository {
       $validatedData = $this->validateTransactionData($request);
       $validatedData['user_id'] = $request->user()->id;
       $transaction = Transaction::create($validatedData);
+      $this->accounts->updateValueAccount($transaction->account_id, $transaction->type, $transaction->value);
       return $this->successResponse(new TransactionResource($transaction), 'Transaction Created', 201);
     } catch(Exception $exception) {
       throw new Exception();

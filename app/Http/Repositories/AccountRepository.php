@@ -70,6 +70,22 @@ class AccountRepository extends ApiRepository {
     }
   }
 
+  public function updateValueAccount($account_id, $type, $value) {
+    try {
+      $account = $this->findAccountByID($account_id);
+      if ($type === 'expense') 
+        $account->amount -= $value;
+      else 
+        $account->amount += $value;
+      
+      $account->save();
+      
+      return response()->json('Success', 200);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
   public function findAccountByID($account_id) {
     return $this->findByID($account_id);
   }
