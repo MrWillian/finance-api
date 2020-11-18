@@ -3,22 +3,33 @@
 namespace App\Http\Repositories;
 
 use App\User;
-use App\Http\Repositories\Types\BaseRepository;
+use App\Http\Repositories\ApiRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository extends BaseRepository {
-  protected $modelClass = User::class;
+class UserRepository extends ApiRepository {
+  protected $modelClass = User::class;  
+  protected $settings;
+
+  public function __construct(SettingsRepository $settings)
+  {
+    $this->settings = $settings;
+  }
 
   public function create(Request $request) {
     try {
-      $user = $this->validateData($request);
-      return User::create([
-        'name' => $user['name'],
-        'email' => $user['email'],
-        'phone_number' => $user['phone_number'],
-        'password' => Hash::make($user['password']),
-      ]);
+      $validateData = $this->validateData($request);
+
+      $user = new User();
+      $user->name = $validateData['name'];
+      $user->email = $validateData['email'];
+      $user->phone_number = $validateData['phone_number'];
+      $user->password = Hash::make($validateData['password']);
+      $user->save();
+
+      $this->settings->createByUserId($user->id);
+
+      return $user;
     } catch(Exception $exception) {
       throw new Exception();
     }

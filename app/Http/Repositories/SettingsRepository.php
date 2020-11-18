@@ -37,15 +37,29 @@ class SettingsRepository extends ApiRepository {
     }
   }
 
+  public function update(Request $request, $settings_id) {
+    try {
+      $settings = $this->findSettingsByID($settings_id);
+      $validatedData = $request->only([ 'theme', 'language', 'hideTotalOfAccounts' ]);
+      $settings->update($validatedData);
+      return new SettingsResource($settings);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
   public function createByUserId($userId) {
     try {
       $settings = new Settings();
       $settings->user_id = $userId;
-      dd($settings);
       $settings->save();
       return;
     } catch (Exception $exception) {
       throw new Exception();
     }
+  }
+
+  public function findSettingsByID($settings_id) {
+    return $this->findByID($settings_id);
   }
 }
