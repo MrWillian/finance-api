@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Settings;
+use App\Http\Repositories\SettingsRepository;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
+    protected $settings;
+
+    public function __construct(SettingsRepository $settings)
+    {
+        $this->settings = $settings;
+        $this->middleware('auth:api')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        //
+        return $this->settings->index();
     }
 
     /**
@@ -82,4 +91,5 @@ class SettingsController extends Controller
     {
         //
     }
+
 }
