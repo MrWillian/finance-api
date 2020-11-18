@@ -12,5 +12,7 @@ Route::apiResource('settings', 'SettingsController');
 Route::get('search/accounts', 'AccountController@getAccountsForUser');
 Route::get('search/transactions', 'TransactionController@getTransactionsForUser');
 
+Route::get('search/setting', 'SettingsController@getSettingByUser');
+
 Route::get('balance', 'BalanceController@getBalanceForUser');
 Route::get('total_for_category', 'BalanceController@getTotalForCategory');
