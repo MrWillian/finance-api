@@ -16,9 +16,9 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('theme', ['dark', 'light']);
-            $table->string('language');
-            $table->boolean('hideTotalOfAccounts');
+            $table->enum('theme', ['dark', 'light'])->default('dark');
+            $table->string('language')->default('pt-br');
+            $table->boolean('hideTotalOfAccounts')->default(false);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
