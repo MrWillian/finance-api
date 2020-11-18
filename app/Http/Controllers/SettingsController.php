@@ -92,7 +92,7 @@ class SettingsController extends Controller
         //
     }
 
-    public function getSettingsForUser(Request $request) {
-        return $this->settings->getSettingsForUser($request);
+    public function getSettingByUser(Request $request) {
+        return $this->settings->getSettingByUser($request);
     }
 }
