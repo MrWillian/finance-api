@@ -36,16 +36,4 @@ class SettingsRepository extends ApiRepository {
       throw new Exception();
     }
   }
-
-
-  public function validateTransactionData(Request $request) {
-    return $request->validate([
-      'type' => 'required|max:7',
-      'description' => 'required|max:255',
-      'account_id' => 'required',
-      'category_id' => 'required',
-      'date' => '',
-      'value' => 'required'
-    ]);
-  }
 }
