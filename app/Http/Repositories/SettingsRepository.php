@@ -25,4 +25,27 @@ class SettingsRepository extends ApiRepository {
       return $this->errorResponse($exception, 500);
     }
   }
+
+  public function create(Request $request) {
+    try {
+      $settings = new Settings();
+      $settings->fill($request->all());
+      $settings->save();
+      return $this->successResponse(new SettingsResource($settings), 'Settings Created', 201);
+    } catch(Exception $exception) {
+      throw new Exception();
+    }
+  }
+
+
+  public function validateTransactionData(Request $request) {
+    return $request->validate([
+      'type' => 'required|max:7',
+      'description' => 'required|max:255',
+      'account_id' => 'required',
+      'category_id' => 'required',
+      'date' => '',
+      'value' => 'required'
+    ]);
+  }
 }
