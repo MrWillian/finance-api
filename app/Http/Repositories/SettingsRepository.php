@@ -36,4 +36,16 @@ class SettingsRepository extends ApiRepository {
       throw new Exception();
     }
   }
+
+  public function createByUserId($userId) {
+    try {
+      $settings = new Settings();
+      $settings->user_id = $userId;
+      dd($settings);
+      $settings->save();
+      return;
+    } catch (Exception $exception) {
+      throw new Exception();
+    }
+  }
 }
