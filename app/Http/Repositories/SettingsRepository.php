@@ -16,7 +16,7 @@ class SettingsRepository extends ApiRepository {
     return $this->successResponse(SettingsResource::collection(Settings::all()));
   }
 
-  public function getSettingsForUser($request) {
+  public function getSettingByUser($request) {
     try {
       $query = $this->newQuery();
       $query->where('user_id', $request->user()->id)->orderBy('id');
