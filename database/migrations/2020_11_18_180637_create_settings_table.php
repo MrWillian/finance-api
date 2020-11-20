@@ -19,6 +19,7 @@ class CreateSettingsTable extends Migration
             $table->enum('theme', ['dark', 'light'])->default('dark');
             $table->string('language')->default('pt-br');
             $table->boolean('hideTotalOfAccounts')->default(false);
+            $table->boolean('allowNotifications')->default(true);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
