@@ -40,7 +40,7 @@ class SettingsRepository extends ApiRepository {
   public function update(Request $request, $settings_id) {
     try {
       $settings = $this->findSettingsByID($settings_id);
-      $validatedData = $request->only([ 'theme', 'language', 'hideTotalOfAccounts' ]);
+      $validatedData = $request->only([ 'theme', 'language', 'hideTotalOfAccounts', 'allowNotifications' ]);
       $settings->update($validatedData);
       return new SettingsResource($settings);
     } catch(Exception $exception) {
