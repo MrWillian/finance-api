@@ -35,6 +35,11 @@ class AuthController extends Controller
     return response()->json(['success' => 'User disconnected'], 200);
   }
 
+  public function destroy($user_id) {
+    Auth::logout();
+    return $this->users->destroy($user_id);
+  }
+
   private function checkCredentialsAndReturnUser(Request $request) {
     if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true))
       return $this->users->searchUserByEmail($request->email);
