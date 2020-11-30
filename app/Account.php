@@ -11,16 +11,20 @@ class Account extends Model
     
     public function getNameAttribute($value)
     {
-        return Crypt::decryptString($value);
+        return decrypt($value);
     }
 
     public function getDescriptionAttribute($value)
     {
-        return Crypt::decryptString($value);
+        return decrypt($value);
     }
 
     public function getAmountAttribute($value)
     {            
-        return floatval(Crypt::decryptString($value));
+        return floatval(decrypt($value));
+    }
+
+    private function decrypt($value) {
+        return Crypt::decryptString($value);
     }
 }
