@@ -7,6 +7,7 @@ use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
 use App\Http\Repositories\AccountRepository;
 use App\Http\Repositories\ApiRepository;
+use Illuminate\Support\Facades\Crypt;
 
 class TransactionRepository extends ApiRepository {
   protected $modelClass = Transaction::class;
@@ -35,6 +36,7 @@ class TransactionRepository extends ApiRepository {
     try {
       $validatedData = $this->validateTransactionData($request);
       $validatedData['user_id'] = $request->user()->id;
+      $validatedData['description'] = Crypt::encryptString($validatedData['description']);
       $transaction = Transaction::create($validatedData);
       $this->accounts->updateValueAccount($transaction->account_id, $transaction->type, $transaction->value);
       return $this->successResponse(new TransactionResource($transaction), 'Transaction Created', 201);
