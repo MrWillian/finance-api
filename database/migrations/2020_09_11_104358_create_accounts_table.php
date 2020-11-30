@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('description');
-            $table->decimal('amount')->default(0);
+            $table->string('amount');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

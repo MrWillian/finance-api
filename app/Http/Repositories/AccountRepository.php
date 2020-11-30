@@ -8,6 +8,7 @@ use App\Http\Repositories\ApiRepository;
 use App\Exceptions\FieldValidatorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class AccountRepository extends ApiRepository {
   protected $modelClass = Account::class;
@@ -30,6 +31,9 @@ class AccountRepository extends ApiRepository {
     try {
       $validatedData = $this->validateAccountData($request);
       $validatedData['user_id'] = $request->user()->id;
+      $validatedData['name'] = Crypt::encryptString($validatedData['name']);
+      $validatedData['description'] = Crypt::encryptString($validatedData['description']);
+      $validatedData['amount'] = Crypt::encryptString($validatedData['amount']);
       $account = Account::create($validatedData);
       return $this->successResponse(new AccountResource($account),'Account Created', 201);
     } catch(FieldValidatorException $exception) {
