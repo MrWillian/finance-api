@@ -78,12 +78,11 @@ class AccountRepository extends ApiRepository {
     try {
       $account = $this->findAccountByID($account_id);
       if ($type === 'expense') 
-        $account->amount -= $value;
+        $account->amount = Crypt::encryptString(strval($account->amount - $value));
       else 
-        $account->amount += $value;
+        $account->amount = Crypt::encryptString(strval($account->amount + $value));
       
       $account->save();
-      
       return response()->json('Success', 200);
     } catch(Exception $exception) {
       throw new Exception();
