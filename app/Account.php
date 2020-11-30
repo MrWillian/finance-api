@@ -20,7 +20,7 @@ class Account extends Model
     }
 
     public function getAmountAttribute($value)
-    {
+    {            
         return floatval(Crypt::decryptString($value));
     }
 }
