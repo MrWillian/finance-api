@@ -11,17 +11,17 @@ class Account extends Model
     
     public function getNameAttribute($value)
     {
-        return decryptAttribute($value);
+        return $this->decryptAttribute($value);
     }
 
     public function getDescriptionAttribute($value)
     {
-        return decryptAttribute($value);
+        return $this->decryptAttribute($value);
     }
 
     public function getAmountAttribute($value)
     {            
-        return floatval(decryptAttribute($value));
+        return floatval($this->decryptAttribute($value));
     }
 
     private function decryptAttribute($value) {
