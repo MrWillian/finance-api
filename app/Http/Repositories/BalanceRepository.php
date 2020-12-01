@@ -45,17 +45,26 @@ class BalanceRepository extends ApiRepository {
   
   public function getTotalForCategory($request) {
     try {
-      $transactionsForCategory = DB::table('transactions')
-        ->select(['transaction_categories.name', 'transactions.value'])
+      $categories = DB::table('transactions')->select('transaction_categories.name')
         ->groupBy('transaction_categories.name')
         ->join('transaction_categories', 'transaction_categories.id', '=', 'transactions.category_id')
         ->where('user_id', $request->user()->id)
         ->get();
 
-      foreach($transactionsForCategory as $transaction) 
-        $transaction->value = (float)Crypt::decryptString($transaction->value);
-      
-      return $this->successResponse($transactionsForCategory, 200);
+      $transactionsForCategory = DB::table('transactions')
+        ->select(['transaction_categories.name', 'transactions.value'])
+        ->join('transaction_categories', 'transaction_categories.id', '=', 'transactions.category_id')
+        ->where('user_id', $request->user()->id)
+        ->get();
+
+      foreach($categories as $category) {
+        $category->value = 0;
+        foreach($transactionsForCategory as $transaction) 
+          if ($transaction->name === $category->name) 
+            $category->value += (float)Crypt::decryptString($transaction->value);
+      }
+
+      return $this->successResponse($categories, 200);
     } catch(Exception $exception) {
       return $this->errorResponse($exception, 500);
     }
