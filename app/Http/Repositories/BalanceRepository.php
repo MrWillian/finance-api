@@ -12,26 +12,30 @@ class BalanceRepository extends ApiRepository {
   public function getBalanceForUser($request) {
     try {
       $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->get();
-      $amountSum = 0;
-      foreach($totalAccounts as $account) {
-        $amountSum += (float)Crypt::decryptString($account->amount);
-      }
-
       $countAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->count();
-      $totalProfit = DB::table('transactions')
-        ->where('type', 'profit')
-        ->where('user_id', $request->user()->id)
-        ->sum('value');
       $totalExpenses = DB::table('transactions')
-        ->where('type', 'expense')
-        ->where('user_id', $request->user()->id)
-        ->sum('value');
+          ->where('type', 'expense')->where('user_id', $request->user()->id)->get();
+      $totalProfits = DB::table('transactions')
+          ->where('type', 'profit')->where('user_id', $request->user()->id)->get();
 
+      $amountSum = 0;
+      $expenseSum = 0;
+      $profitSum = 0;
+
+      foreach($totalAccounts as $account) 
+        $amountSum += (float)Crypt::decryptString($account->amount);
+      
+      foreach($totalExpenses as $expense) 
+        $expenseSum += (float)Crypt::decryptString($expense->value);
+
+      foreach($totalProfits as $profit) 
+        $profitSum += (float)Crypt::decryptString($profit->value);
+      
       $balance = new Balance();
       $balance->total = $amountSum;
       $balance->count = $countAccounts;
-      $balance->profits = (float)$totalProfit;
-      $balance->expenses = (float)$totalExpenses;
+      $balance->expenses = $expenseSum;
+      $balance->profits = $profitSum;
      
       return $this->successResponse($balance, 200);
     } catch(Exception $exception) {
