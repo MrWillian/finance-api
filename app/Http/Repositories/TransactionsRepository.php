@@ -31,12 +31,13 @@ class TransactionRepository extends ApiRepository {
       return $this->errorResponse($exception, 500);
     }
   }
-
+  
   public function create(Request $request) {
     try {
       $validatedData = $this->validateTransactionData($request);
       $validatedData['user_id'] = $request->user()->id;
       $validatedData['description'] = Crypt::encryptString($validatedData['description']);
+      $validatedData['value'] = Crypt::encryptString($validatedData['value']);
       $transaction = Transaction::create($validatedData);
       $this->accounts->updateValueAccount($transaction->account_id, $transaction->type, $transaction->value);
       return $this->successResponse(new TransactionResource($transaction), 'Transaction Created', 201);

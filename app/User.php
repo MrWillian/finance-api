@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -64,5 +65,17 @@ class User extends Authenticatable implements JWTSubject
   public function routeNotificationForMail($notification)
   {
     return $this->email;
+  }
+
+  public function getNameAttribute($value) {
+    return $this->decryptAttribute($value);
+  }
+
+  public function getPhoneNumberAttribute($value) {
+    return $this->decryptAttribute($value);
+  }
+
+  private function decryptAttribute($value) {
+    return Crypt::decryptString($value);
   }
 }

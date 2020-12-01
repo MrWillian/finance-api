@@ -21,7 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->string('description');
             $table->enum('type', ['expense', 'profit']);
             $table->timestamp('date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->decimal('value')->default(0);
+            $table->string('value');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
