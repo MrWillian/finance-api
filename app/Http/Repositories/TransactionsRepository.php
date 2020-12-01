@@ -37,6 +37,7 @@ class TransactionRepository extends ApiRepository {
       $validatedData = $this->validateTransactionData($request);
       $validatedData['user_id'] = $request->user()->id;
       $validatedData['description'] = Crypt::encryptString($validatedData['description']);
+      $validatedData['value'] = Crypt::encryptString($validatedData['value']);
       $transaction = Transaction::create($validatedData);
       $this->accounts->updateValueAccount($transaction->account_id, $transaction->type, $transaction->value);
       return $this->successResponse(new TransactionResource($transaction), 'Transaction Created', 201);
