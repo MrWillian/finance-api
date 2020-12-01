@@ -6,11 +6,17 @@ use App\Balance;
 use Illuminate\Http\Request;
 use App\Http\Repositories\ApiRepository;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class BalanceRepository extends ApiRepository {
   public function getBalanceForUser($request) {
     try {
-      $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->sum('amount');
+      $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->get(); //->sum('amount');
+      $amountSum = 0;
+      foreach($totalAccounts as $account) {
+        $amountSum += (float)Crypt::decryptString($account->amount);
+      }
+
       $countAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->count();
       $totalProfit = DB::table('transactions')
         ->where('type', 'profit')
@@ -22,10 +28,10 @@ class BalanceRepository extends ApiRepository {
         ->sum('value');
 
       $balance = new Balance();
-      $balance->total = $totalAccounts;
+      $balance->total = $amountSum;
       $balance->count = $countAccounts;
-      $balance->profits = $totalProfit;
-      $balance->expenses = $totalExpenses;
+      $balance->profits = (float)$totalProfit;
+      $balance->expenses = (float)$totalExpenses;
      
       return $this->successResponse($balance, 200);
     } catch(Exception $exception) {
