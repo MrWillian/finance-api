@@ -31,7 +31,7 @@ class TransactionRepository extends ApiRepository {
       return $this->errorResponse($exception, 500);
     }
   }
-
+  
   public function create(Request $request) {
     try {
       $validatedData = $this->validateTransactionData($request);
