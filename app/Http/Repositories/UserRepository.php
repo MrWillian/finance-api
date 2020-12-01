@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Repositories\ApiRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class UserRepository extends ApiRepository {
   protected $modelClass = User::class;  
@@ -21,9 +22,9 @@ class UserRepository extends ApiRepository {
       $validateData = $this->validateData($request);
 
       $user = new User();
-      $user->name = $validateData['name'];
+      $user->name = Crypt::encryptString($validateData['name']);
       $user->email = $validateData['email'];
-      $user->phone_number = $validateData['phone_number'];
+      $user->phone_number = Crypt::encryptString($validateData['phone_number']);
       $user->password = Hash::make($validateData['password']);
       $user->save();
 
