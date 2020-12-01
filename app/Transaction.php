@@ -14,4 +14,8 @@ class Transaction extends Model
     public function getDescriptionAttribute($value) {
         return Crypt::decryptString($value);
     }
+    
+    public function getValueAttribute($value) {            
+        return floatval(Crypt::decryptString($value));
+    }
 }
