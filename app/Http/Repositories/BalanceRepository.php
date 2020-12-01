@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 class BalanceRepository extends ApiRepository {
   public function getBalanceForUser($request) {
     try {
-      $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->get(); //->sum('amount');
+      $totalAccounts = DB::table('accounts')->where('user_id', $request->user()->id)->get();
       $amountSum = 0;
       foreach($totalAccounts as $account) {
         $amountSum += (float)Crypt::decryptString($account->amount);
