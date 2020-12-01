@@ -52,9 +52,8 @@ class BalanceRepository extends ApiRepository {
         ->where('user_id', $request->user()->id)
         ->get();
 
-      for($count = 0; $count < sizeof($transactionsForCategory); $count++) {
-        $transactionsForCategory[$count]->value = (float)Crypt::decryptString($transactionsForCategory[$count]->value);
-      }
+      foreach($transactionsForCategory as $transaction) 
+        $transaction->value = (float)Crypt::decryptString($transaction->value);
       
       return $this->successResponse($transactionsForCategory, 200);
     } catch(Exception $exception) {
