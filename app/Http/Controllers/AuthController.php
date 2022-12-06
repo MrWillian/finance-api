@@ -40,6 +40,10 @@ class AuthController extends Controller
     return $this->users->destroy($user_id);
   }
 
+  public function listAll() {
+    return $this->users->listAll();
+  }
+
   private function checkCredentialsAndReturnUser(Request $request) {
     if (Auth::attempt(array('email' => $request->email, 'password' => $request->password), true))
       return $this->users->searchUserByEmail($request->email);
