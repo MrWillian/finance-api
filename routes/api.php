@@ -4,6 +4,7 @@ Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
 Route::get('logout', 'AuthController@logout');
 Route::delete('delete/users/{user_id}', 'AuthController@destroy');
+Route::get('list', 'AuthController@listAll');
 
 Route::apiResource('accounts', 'AccountController');
 Route::apiResource('transactions', 'TransactionController');
