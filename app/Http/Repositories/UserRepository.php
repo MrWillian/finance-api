@@ -71,6 +71,10 @@ class UserRepository extends ApiRepository {
     }
   }
 
+  public function listAll() {
+    return User::orderBy('created_at', 'DESC')->get();
+  }
+
   public function validateData(Request $request) {
     return $request->validate([
       'name' => 'required|max:140',
