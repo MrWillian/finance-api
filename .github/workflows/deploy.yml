@@ -41,6 +41,9 @@ jobs:
         EXCLUDE: "/dist/, /node_modules/, /vendor/, /.git/, **.env, rebuild_app.sh, watcher.sh"
 
     - name: Install Dependencies
+      uses: "shivammathur/setup-php@v2"
+      with:
+        php-version: "7.2"
       uses: "ramsey/composer-install@v2"
       with:
         dependency-versions: "highest"
