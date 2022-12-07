@@ -40,6 +40,9 @@ jobs:
         TARGET: ${{secrets.TARGET_DIR}}
         EXCLUDE: "/dist/, /node_modules/, /vendor/, /.git/, **.env, rebuild_app.sh, watcher.sh"
 
+    - name: Install Dependencies
+      uses: "ramsey/composer-install@v2"
+
     - name: Remove Github Actions IP from security group
       run: |
         aws ec2 revoke-security-group-ingress --group-name ${{ env.AWS_SG_NAME }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
