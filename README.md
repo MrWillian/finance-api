@@ -1,80 +1,66 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Finance API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Descrição
 
-A better README is coming soon...
+A **Finance API** é uma API em Laravel para um aplicativo de controle financeiro. Essa API disponibiliza rotas para que os usuários possam criar sua conta e controlar virtualmente suas contas bancárias, cadastrar despesas e ganhos, verificar seu balanço a qualquer momento e separar suas transações em categorias.
 
-## About Laravel Framework
+É preocupante que, atualmente, muitas pessoas não recebam uma educação financeira adequada desde a infância. A falta de conhecimento sobre finanças pessoais pode levar a más decisões financeiras, dívidas e instabilidade financeira. É essencial ter um controle financeiro eficiente para garantir uma vida segura e estável.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalação
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Siga as instruções abaixo para clonar o repositório e executar o projeto Laravel:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone o repositório:
+   ```shell
+   git clone https://github.com/MrWillian/finance-api.git
+   cd finance-api
+   ```
 
-## Learning Laravel
+2. Instale as dependências do projeto via Composer:
+   ```shell
+   composer install
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. Configure o arquivo `.env` com as informações do banco de dados PostgreSQL e outras configurações necessárias.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Execute as migrações do banco de dados:
+   ```shell
+   php artisan migrate
+   ```
 
-## Laravel Sponsors
+5. Gere uma chave de criptografia do aplicativo:
+   ```shell
+   php artisan key:generate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+6. Execute o servidor de desenvolvimento do Laravel:
+   ```shell
+   php artisan serve
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+7. Acesse a API em `http://localhost:8000`.
 
-## Contributing
+## Testes
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Para executar os testes automatizados, utilize o seguinte comando:
+```shell
+php artisan test
+```
 
-## Code of Conduct
+## Detalhes Técnicos
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+A **Finance API** foi desenvolvida seguindo boas práticas e padrões de projeto. Alguns aspectos técnicos importantes incluem:
 
-## Security Vulnerabilities
+- **Padrão MVC**: A API segue o padrão arquitetural Model-View-Controller (MVC), que separa a lógica de negócio, a apresentação e a manipulação de dados em componentes independentes. Isso facilita a manutenção e a escalabilidade do código.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Repository Pattern**: O Repository Pattern é utilizado para isolar a lógica de acesso a dados do restante do código. Ele fornece uma abstração para a camada de persistência, permitindo que a API trabalhe com diferentes fontes de dados sem alterar sua lógica principal.
 
-## License
+- **Service Pattern**: O Service Pattern é utilizado para separar a lógica de negócio da interação direta com os modelos e os controladores. Os serviços são responsáveis por executar as operações de negócio, enquanto os controladores lidam com a interação com o cliente.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Observers**: Observers são utilizados para adicionar comportamentos aos modelos em determinados eventos. 
+
+A **Finance API** utiliza o banco de dados PostgreSQL para armazenar as informações das contas bancárias, transações, categorias e demais dados relevantes. É importante ressaltar que todas as descrições e valores das transações são criptografados no banco de dados, garantindo a segurança dos dados dos usuários. A maior medida que os usuários precisam tomar é garantir que sua senha não seja compartilhada com ninguém que não desejem.
+
+---
+
+Se tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato.
