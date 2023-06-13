@@ -42,7 +42,7 @@ Siga as instruções abaixo para clonar o repositório e executar o projeto Lara
 
 ## Testes
 
-Para executar os testes automatizados, utilize o seguinte comando:
+Para executar os Testes Automatizados, utilize o seguinte comando:
 ```shell
 php artisan test
 ```
