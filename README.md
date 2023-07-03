@@ -61,6 +61,6 @@ A **Finance API** foi desenvolvida seguindo boas práticas e padrões de projeto
 
 A **Finance API** utiliza o banco de dados PostgreSQL para armazenar as informações das contas bancárias, transações, categorias e demais dados relevantes. É importante ressaltar que todas as descrições e valores das transações são criptografados no banco de dados, garantindo a segurança dos dados dos usuários. A maior medida que os usuários precisam tomar é garantir que sua senha não seja compartilhada com ninguém que não desejem.
 
----
+----
 
 Se tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato!
