@@ -14,6 +14,7 @@ class TransactionCategorySeeder extends Seeder
         DB::table('transaction_categories')->insert(['name' => 'Lucro']);
         DB::table('transaction_categories')->insert(['name' => 'Acessório']);
         DB::table('transaction_categories')->insert(['name' => 'Automóvel']);
+        DB::table('transaction_categories')->insert(['name' => 'Casa']);
         DB::table('transaction_categories')->insert(['name' => 'Combustível']);
         DB::table('transaction_categories')->insert(['name' => 'Comida']);
         DB::table('transaction_categories')->insert(['name' => 'Eletrodoméstico']);
